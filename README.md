@@ -1,6 +1,6 @@
 # ❄️ Arch Linux + i3wm + Nordic Theme + My Setup
 
-This guide walks you through setting up a beautiful and efficient Arch Linux environment with `i3wm`, the `Nordic GTK theme`, custom fonts, and essential apps – all sorted and grouped step by step.
+This guide walks you through setting up a beautiful and efficient Arch Linux environment with `i3wm`, the `Nordic GTK theme`, custom fonts, cursors in Nordic style, and essential apps – all sorted and grouped step by step.
 
 ---
 
@@ -8,7 +8,7 @@ This guide walks you through setting up a beautiful and efficient Arch Linux env
 
 ```bash
 sudo pacman -Syu
-````
+```
 
 ---
 
@@ -20,7 +20,7 @@ sudo pacman -S --needed \
   dunst udisks2 udiskie git neofetch mtpaint mpv p7zip \
   libreoffice-still papirus-icon-theme lxappearance \
   fuse2 ttf-dejavu ttf-liberation noto-fonts noto-fonts-emoji ttf-font-awesome \
-  xorg-xsetroot
+  xorg-xsetroot xorg-xcursor-themes
 ```
 
 ---
@@ -76,6 +76,8 @@ mkdir -p ~/.icons/default
 nano ~/.icons/default/index.theme
 ```
 
+Add:
+
 ```ini
 [Icon Theme]
 Inherits=Nordzy
@@ -83,18 +85,53 @@ Inherits=Nordzy
 
 ---
 
-## 💻 6. Alacritty Font Config
+## 🖱️ 6. Set Cursor Theme via `.Xresources`
+
+Add or edit `~/.Xresources`:
+
+```
+Xcursor.theme: Nordzy
+Xcursor.size: 24
+```
+
+Load it:
+
+```bash
+xrdb ~/.Xresources
+```
+
+---
+
+## 🪟 7. Apply Cursor Theme on i3 Startup
+
+Add to your `~/.config/i3/config`:
+
+```bash
+exec --no-startup-id xrdb ~/.Xresources
+exec --no-startup-id xsetroot -cursor_name left_ptr
+```
+
+---
+
+## 💻 8. Alacritty Font Config
 
 ```bash
 mkdir -p ~/.config/alacritty
 nano ~/.config/alacritty/alacritty.toml
 ```
 
-Use `JetBrains Mono Nerd Font` in the config.
+Use `JetBrains Mono Nerd Font` in the config, for example:
+
+```yaml
+font:
+  normal:
+    family: "JetBrainsMono Nerd Font"
+    size: 11.0
+```
 
 ---
 
-## 🌫️ 7. Enable Picom Compositor
+## 🌫️ 9. Enable Picom Compositor
 
 ```bash
 mkdir -p ~/.config/picom
@@ -104,7 +141,9 @@ picom --config ~/.config/picom/picom.conf
 
 ---
 
-## 🔒 8. Lock Screen Script with i3
+## 🔒 10. Lock Screen Script with i3
+
+Make your lock script executable:
 
 ```bash
 chmod +x ~/.config/i3/lock.sh
@@ -116,7 +155,7 @@ Add to `~/.config/i3/config`:
 bindsym Mod1+Control+l exec notify-send "Alt+Ctrl+L pressed"
 ```
 
-Example lock command:
+Example lock command inside `lock.sh`:
 
 ```bash
 i3lock -c 000000
@@ -124,7 +163,7 @@ i3lock -c 000000
 
 ---
 
-## 📢 9. Notifications (Test dunst)
+## 📢 11. Test Notifications with Dunst
 
 ```bash
 notify-send "🔔 Alert" "This is a test 🎉"
@@ -133,18 +172,19 @@ notify-send "Test Notification" "Dunst is working!"
 
 ---
 
-## ⚙️ 10. Manual App Launch
+## ⚙️ 12. Manual App Launch
+
+Add to startup or run manually:
 
 ```bash
 udiskie &
 dunst &
 picom --config ~/.config/picom/picom.conf &
-~/Apps/Bootstrap-Studio.AppImage
 ```
 
 ---
 
-## 🔁 11. Reboot When Needed
+## 🔁 13. Reboot When Needed
 
 ```bash
 reboot
@@ -154,12 +194,10 @@ reboot
 
 ## ✅ Done!
 
-We now have a clean, powerful, and beautiful `Arch + i3` setup with:
+You now have a clean, powerful, and beautiful `Arch + i3` setup with:
 
-* Nordic theme 🌌
+* Nordic GTK theme 🌌
 * Nerd Fonts + JetBrains Mono ✨
-* Custom cursors 🎯
-* Essential dev tools 🛠️
-* Smooth notifications and effects 💬
-
----
+* Custom cursors in Nordic style 🎯
+* Essential dev tools and apps 🛠️
+* Smooth notifications and compositor effects 💬
