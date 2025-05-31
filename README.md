@@ -1,4 +1,4 @@
-# ❄️ Arch Linux + i3wm + Nordic Theme + My Setup
+# ❄️ Arch Linux + i3wm + Nordic Theme
 
 This guide walks you through setting up a beautiful and efficient Arch Linux environment with `i3wm`, the `Nordic GTK theme`, custom fonts, cursors in Nordic style, and essential apps – all sorted and grouped step by step.
 
